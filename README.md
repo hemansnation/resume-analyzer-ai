@@ -45,11 +45,14 @@ stop words -> and, the, a, an
 ## Steps
 
 1. enviroment
+    - install libraries (pip install flask==2.3.3)
+    - put everything inside requirements.txt
+    - pip freeze > requirements.txt
 2. download an english model by spacy (NER): python -m spacy download en_core_web_sm
 3. create project files and folder
-4. pdf extraction using pdfplumber
-5. nlp logic - resume parser
-6. flask app
+4. pdf extraction using pdfplumber - utils.py
+5. nlp logic - resume_parser.py
+6. flask app - app.py
 7. templates html and static css
 8. run the project
 
