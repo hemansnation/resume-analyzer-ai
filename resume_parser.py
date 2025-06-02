@@ -1,5 +1,9 @@
 import spacy
 import re
+# ADDed THESE new IMPORTS 
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
 
 class ResumeParser:
     def __init__(self):
@@ -42,13 +46,35 @@ class ResumeParser:
 
         return entities
 
-    def score_resume(self, entities, job_skills=['Python', 'SQL']):
-        matched_skills = [skill for skill in entities['skills'] if skill in job_skills]
-        score = len(matched_skills) / len(job_skills) * 100
+    # def score_resume(self, entities, job_skills=['Python', 'SQL']):
+    #     matched_skills = [skill for skill in entities['skills'] if skill in job_skills]
+    #     score = len(matched_skills) / len(job_skills) * 100
 
-        feedback = f'Matched {len(matched_skills)} out of {len(job_skills)} required skills.'
+    #     feedback = f'Matched {len(matched_skills)} out of {len(job_skills)} required skills.'
 
-        if score < 50:
-            feedback += "Consider adding skills like: " + ', '.join(set(job_skills) - set(entities['skills']))
+    #     if score < 50:
+    #         feedback += "Consider adding skills like: " + ', '.join(set(job_skills) - set(entities['skills']))
 
-        return {"score": round(score, 2), "feedback": feedback}
+    #     return {"score": round(score, 2), "feedback": feedback}
+    
+
+def score_resume(self, entities, job_description):
+    resume_text = ' '.join(entities['skills']) or ''
+    corpus = [resume_text, job_description]
+
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.metrics.pairwise import cosine_similarity
+
+    tfidf_vectorizer = TfidfVectorizer()
+    tfidf_matrix = tfidf_vectorizer.fit_transform(corpus)
+    similarity = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])[0][0] * 100
+
+    feedback = f"TF-IDF similarity score: {round(similarity, 2)}%."
+    if similarity < 50:
+        missing = set(job_description.lower().split()) - set(resume_text.lower().split())
+        feedback += f" Add or highlight relevant keywords like: {', '.join(list(missing)[:5])}"
+
+    return {"score": round(similarity, 2), "feedback": feedback}
+
+
+
