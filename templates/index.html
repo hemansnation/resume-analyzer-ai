@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <title>Resume Analyzer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <!--     <link rel="stylesheet" href="static/css/styles.css"> -->
-</head>
-<body>
     <style>
         body {
             display: flex;
@@ -15,14 +12,33 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
         }
-    </style>
-    <h1>AI Powered Resume Analyzer</h1>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="resume">Upload your resume (PDF):</label>
-        <input type="file" id="resume" name="resume" required>
-        <button type="submit">Analyze</button>
-    </form>
-    <script src="{{ url_for('static', filename='js/scipts.js') }}"></script>
-</body>
-</html>
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
