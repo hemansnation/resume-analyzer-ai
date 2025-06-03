@@ -7,11 +7,16 @@
 </head>
 <body>
     <h1>AI Powered Resume Analyzer</h1>
+
     <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="resume">Upload your resume (PDF):</label>
-        <input type="file" id="resume" name="resume" accept=".pdf" required>
-        <button type="submit">Analyze</button>
+        <label for="resume"><strong>Upload your resume (PDF):</strong></label><br>
+        <input type="file" id="resume" name="resume" accept=".pdf" required><br><br>
+
+        <label for="job_description"><strong>Paste Job Description:</strong></label>
+        <textarea id="job_description" name="job_description" rows="10" required></textarea>
+         <input type="submit" value="Analyze Resume">
     </form>
-    <script src="{{ url_for('static', filename='js/scipts.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

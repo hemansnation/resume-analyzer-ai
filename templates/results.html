@@ -4,20 +4,62 @@
     <meta charset="UTF-8">
     <title>Resume Analysis Results</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .section {
+            margin-top: 20px;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Resume Analysis Results</h1>
-    <h2>Extracted Information</h2>
-    <p>Name: {{ entities.name or 'Not found' }}</p>
-    <p>Email: {{ entities.email or 'Not found' }}</p>
-    <p>Phone: {{ entities.phone or 'Not found' }}</p>
-    <p>Skills: {{ entities.skills | join(', ') or 'None' }}</p>
-    <p>Education: {{ entities.education | join(', ') or 'None' }}</p>
+    <div class="container">
+        <h1>Resume Analysis Results</h1>
 
-    <br>
-    <h2>Resume Score</h2>
-    <p>Score: {{ score_data.score }}%</p>
-    <p>Feedback: {{ score_data.feedback }}</p>
-    <a href="/">Analyze another resume</a>
+        <div class="section">
+            <h2>📋 Job Description</h2>
+            <pre>{{ job_description }}</pre>
+        </div>
+
+        <div class="section">
+            <h2>🧠 Extracted Entities</h2>
+            <ul>
+                <li><strong>Name:</strong> {{ entities.name }}</li>
+                <li><strong>Email:</strong> {{ entities.email }}</li>
+                <li><strong>Phone:</strong> {{ entities.phone }}</li>
+                <li><strong>Skills:</strong> {{ entities.skills | join(', ') }}</li>
+                <li><strong>Education:</strong> {{ entities.education | join(', ') }}</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📊 Resume Score & Feedback</h2>
+            <pre>{{ score_data }}</pre>
+        </div>
+    </div>
 </body>
 </html>
