@@ -36,13 +36,13 @@ class ResumeParser:
         phones = re.findall(phone_pattern, text)
         entities['phone'] = phones[0] if phones else None
 
-        # Extract skills (simple keyword match)
+        # Extract skills
         lower_text = text.lower()
         for skill in self.skills_db:
             if skill.lower() in lower_text:
                 entities['skills'].append(skill)
 
-        # Extract education (simple match)
+        # Extract education
         education_keywords = ['Bachelor', 'Master', 'B.Sc', 'M.Sc', 'B.Tech', 'M.Tech', 'PhD']
         for keyword in education_keywords:
             if keyword.lower() in lower_text:

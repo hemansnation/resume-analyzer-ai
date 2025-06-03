@@ -8,10 +8,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB max
 
-# Ensure uploads folder exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
-# Initialize parser
 parser = ResumeParser()
 
 @app.route('/')
@@ -36,16 +33,12 @@ def upload_resume():
         if text.startswith("Error:"):
             return render_template("error.html", message=text)
 
-        # ✅ Extract job description from form
         job_description = request.form.get('job_description', '')
-
-        # ✅ Analyze resume
         entities = parser.extract_entities(text)
         score_data = parser.score_resume(entities, job_description)
 
         os.remove(file_path)
 
-        # ✅ Pass job description to results.html
         return render_template(
             'results.html',
             entities=entities,
