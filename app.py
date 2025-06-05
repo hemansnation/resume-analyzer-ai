@@ -9,10 +9,9 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB max
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
 parser = ResumeParser()
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def index():
     return render_template('index.html')
 
@@ -34,13 +33,20 @@ def upload_resume():
         if text.startswith("Error:"):
             return render_template("error.html", message=text)
 
-        job_description = request.form['job_description']
+        job_description = request.form.get('job_description', '')
         entities = parser.extract_entities(text)
         score_data = parser.score_resume(entities, job_description)
 
         os.remove(file_path)
 
-        return render_template('results.html', entities=entities, score_data=score_data)
+        return render_template(
+            'results.html',
+            entities=entities,
+            score_data=score_data,
+            job_description=job_description
+        )
 
     return render_template("error.html", message="Invalid file format. Please upload a PDF file.")
 
+if __name__ == '__main__':
+    app.run(debug=True)
